@@ -1,15 +1,18 @@
 pipeline {
     agent any
 
+    environment {
+        PYTHON = 'C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python314\\python.exe'
+    }
+
     stages {
 
         stage('Check Python') {
             steps {
                 bat '''
                     echo ===== Checking Python =====
-                    where python
-                    python --version
-                    python -m pip --version
+                    "%PYTHON%" --version
+                    "%PYTHON%" -m pip --version
                 '''
             }
         }
@@ -18,8 +21,8 @@ pipeline {
             steps {
                 bat '''
                     echo ===== Installing Dependencies =====
-                    python -m pip install --upgrade pip
-                    python -m pip install -r requirements.txt
+                    "%PYTHON%" -m pip install --upgrade pip
+                    "%PYTHON%" -m pip install -r requirements.txt
                 '''
             }
         }
@@ -28,7 +31,7 @@ pipeline {
             steps {
                 bat '''
                     echo ===== Running Tests =====
-                    python -m pytest
+                    "%PYTHON%" -m pytest
                 '''
             }
         }
@@ -36,8 +39,8 @@ pipeline {
         stage('Build') {
             steps {
                 bat '''
-                    echo ===== Build =====
-                    echo Build completed successfully
+                    echo ===== Building Project =====
+                    echo Build completed successfully.
                 '''
             }
         }
@@ -45,11 +48,11 @@ pipeline {
 
     post {
         success {
-            echo 'BUILD SUCCESSFUL!'
+            echo "BUILD SUCCESSFUL!"
         }
 
         failure {
-            echo 'BUILD FAILED!'
+            echo "BUILD FAILED!"
         }
     }
 }
