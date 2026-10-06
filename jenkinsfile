@@ -1,18 +1,18 @@
 pipeline {
     agent any
 
-    environment {
-        PYTHON = 'C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python314\\python.exe'
-    }
-
     stages {
 
         stage('Check Python') {
             steps {
                 bat '''
-                    echo ===== Checking Python =====
-                    "%PYTHON%" --version
-                    "%PYTHON%" -m pip --version
+                    echo ==============================
+                    echo Checking Python
+                    echo ==============================
+
+                    where py
+                    py --version
+                    py -m pip --version
                 '''
             }
         }
@@ -20,9 +20,12 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 bat '''
-                    echo ===== Installing Dependencies =====
-                    "%PYTHON%" -m pip install --upgrade pip
-                    "%PYTHON%" -m pip install -r requirements.txt
+                    echo ==============================
+                    echo Installing Dependencies
+                    echo ==============================
+
+                    py -m pip install --upgrade pip
+                    py -m pip install -r requirements.txt
                 '''
             }
         }
@@ -30,8 +33,11 @@ pipeline {
         stage('Test') {
             steps {
                 bat '''
-                    echo ===== Running Tests =====
-                    "%PYTHON%" -m pytest
+                    echo ==============================
+                    echo Running Tests
+                    echo ==============================
+
+                    py -m pytest
                 '''
             }
         }
@@ -39,8 +45,11 @@ pipeline {
         stage('Build') {
             steps {
                 bat '''
-                    echo ===== Building Project =====
-                    echo Build completed successfully.
+                    echo ==============================
+                    echo Build
+                    echo ==============================
+
+                    echo Build completed successfully!
                 '''
             }
         }
