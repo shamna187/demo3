@@ -1,5 +1,10 @@
+
 pipeline {
     agent any
+
+    environment {
+        PYTHON = 'C:\\Users\\User\\AppData\\Local\\Python\\bin\\python.exe'
+    }
 
     stages {
 
@@ -10,9 +15,8 @@ pipeline {
                     echo Checking Python
                     echo ==============================
 
-                    where py
-                    py --version
-                    py -m pip --version
+                    "%PYTHON%" --version
+                    "%PYTHON%" -m pip --version
                 '''
             }
         }
@@ -24,8 +28,8 @@ pipeline {
                     echo Installing Dependencies
                     echo ==============================
 
-                    py -m pip install --upgrade pip
-                    py -m pip install -r requirements.txt
+                    "%PYTHON%" -m pip install --upgrade pip
+                    "%PYTHON%" -m pip install -r requirements.txt
                 '''
             }
         }
@@ -37,7 +41,7 @@ pipeline {
                     echo Running Tests
                     echo ==============================
 
-                    py -m pytest
+                    "%PYTHON%" -m pytest
                 '''
             }
         }
