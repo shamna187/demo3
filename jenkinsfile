@@ -6,7 +6,7 @@ pipeline {
         stage('Check Python') {
             steps {
                 bat '''
-                    echo Checking Python installation...
+                    echo ===== Checking Python =====
                     where python
                     python --version
                     python -m pip --version
@@ -17,7 +17,7 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 bat '''
-                    echo Installing dependencies...
+                    echo ===== Installing Dependencies =====
                     python -m pip install --upgrade pip
                     python -m pip install -r requirements.txt
                 '''
@@ -27,7 +27,7 @@ pipeline {
         stage('Test') {
             steps {
                 bat '''
-                    echo Running tests...
+                    echo ===== Running Tests =====
                     python -m pytest
                 '''
             }
@@ -36,8 +36,8 @@ pipeline {
         stage('Build') {
             steps {
                 bat '''
-                    echo Build stage...
-                    echo Build completed successfully.
+                    echo ===== Build =====
+                    echo Build completed successfully
                 '''
             }
         }
@@ -45,11 +45,11 @@ pipeline {
 
     post {
         success {
-            echo 'Pipeline completed successfully!'
+            echo 'BUILD SUCCESSFUL!'
         }
 
         failure {
-            echo 'Pipeline failed!'
+            echo 'BUILD FAILED!'
         }
     }
 }
